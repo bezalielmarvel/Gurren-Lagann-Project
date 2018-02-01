@@ -8,7 +8,7 @@ a=Arene()
 o = Objet3D()
 v = Objet3D()
 
-#creation
+#c
 o.addSommet(Point(0,0,0))
 o.addSommet(Point(1,0,0))
 o.addSommet(Point(0,1,0))
