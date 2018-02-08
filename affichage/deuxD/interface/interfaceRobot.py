@@ -6,8 +6,16 @@ from robotRep import Robot
 from math import *
 
 """
-lance une simulation representant un robot de base, sans la dimension du temps (pas de distance/rotation)
+lance une simulation representant un robot de base
 """
+
+fenetre=Tk()
+robot=Robot(Pave(50, 50, 0), Objet3D(), Objet3D(), Vecteur(0,-1,0))
+Canevas = Canvas(fenetre, width = 480, height = 320, bg ='white')
+Valeur = StringVar()
+Valeur.set(0.0)
+VMAX = StringVar()
+VMAX.set(10.0)
 
 def lancerSimulation():
     """
@@ -18,22 +26,30 @@ def lancerSimulation():
     global Canevas
 
     #creaction fenetre
-    fenetre=Tk()
     fenetre.title("Interface d'affichage d'un prototype de robot")
 
     #creaction des boutons
     Button(fenetre, text ='Quitter', command = fenetre.destroy).pack(side=LEFT,padx=5,pady=5)
     Button(fenetre, text ='Effacer', command = effacer).pack(side=LEFT,padx = 5,pady = 5)
 
-    #creation canvas/arene
-    Canevas = Canvas(fenetre, width = 480, height = 320, bg ='white')
+    #initialisation canvas/ vue arene
     vueArene=Vue2DArene(arene)
     vueArene.afficher(Canevas)
     Canevas.bind('<Key>',clavier)
     Canevas.focus_set()
-
+    
+    # Création d'un widget Spinbox
+    boite = Spinbox(fenetre,from_=0,to=10,increment=0.5,textvariable=Valeur,width=5,command=modVitesse())
+    boite.pack(padx=30,pady=10)
     Canevas.pack(padx=10,pady=10)
     fenetre.mainloop()
+
+def modVitesse():
+    """
+    Verifie que la valeur entree est bien dans les normes
+    """
+    if Valeur.get()>VMAX.get():
+        Valeur.set(VMAX.get())
 
 def clavier(event):
     """
@@ -62,7 +78,6 @@ def creerArene():
     """
     arene = Arene()
     global robot
-    robot=Robot(Pave(50, 50, 0), Objet3D(), Objet3D(), Vecteur(0,-1,0))
     robot.deplacer(Vecteur(100,100,0)) #Le robot doit avoir une position nulle au depart pour etre a (50,50)
     arene.add(robot)
     return arene
