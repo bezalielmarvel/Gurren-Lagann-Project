@@ -1,8 +1,6 @@
 from tkinter import *
-from geometrie3D import Arene
+from geometrie3D import Arene, Pave, Objet3D
 from affichage.deuxD.vue2DRep.Vue2D import *
-from geometrie3D import Pave
-from geometrie3D import Objet3D
 from geometrie3D.pointRep import Vecteur
 from robotRep import Robot
 from math import *
@@ -65,7 +63,7 @@ def creerArene():
     arene = Arene()
     global robot
     robot=Robot(Pave(50, 50, 0), Objet3D(), Objet3D(), Vecteur(0,-1,0))
-    robot.deplacer(Vecteur(50,50,0)) #Le robot doit avoir une position nulle au depart pour etre a (50,50)
+    robot.deplacer(Vecteur(100,100,0)) #Le robot doit avoir une position nulle au depart pour etre a (50,50)
     arene.add(robot)
     return arene
         

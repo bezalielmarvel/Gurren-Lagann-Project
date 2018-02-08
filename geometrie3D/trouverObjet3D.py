@@ -1,6 +1,6 @@
 
 from geometrie3D import Arene
-from geometrie3D.pointRep import Point
+from geometrie3D.pointRep import Vecteur
 
 
 def trouverObjet3D(arene, x, y, z):

@@ -1,5 +1,5 @@
-from geometrie3D.pointRep import Vecteur
-from geometrie3D import Pave
+from geometrie3D.pointRep import *
+from geometrie3D import *
 from robotRep import Robot
 from tkinter import *
 
@@ -14,12 +14,12 @@ class Vue2DVecteur(object):
         vecteur: Vecteur
         ligne: ligne 2D
         canevas: Canevas
-
+        
         Cree la ligne dans canevas
         """
         self.vecteur=vecteur
         self.ligne=canevas.create_line(0, 0, vecteur.x, vecteur.y)
-
+        
     def afficher(self, canevas, position):
         """ actualise la position de ligne """
         if position and canevas:
@@ -30,6 +30,7 @@ class Vue2DPave(object):
     """Constructeur de la vue
     pave: Pave
     canevas: Canevas
+
     Cree le pave dans canevas
     """
     def __init__(self, pave, canevas):
@@ -44,7 +45,7 @@ class Vue2DPave(object):
         self.cotes.append(canevas.create_line(pave.sommets[3].x,pave.sommets[3].y, pave.sommets[0].x, pave.sommets[0].y))
 
     def afficher(self, canevas):
-        """
+        """ 
         met a jour les coordonnee des points
         """
         if self.pave and canevas:
@@ -57,22 +58,22 @@ class Vue2DPave(object):
 class Vue2DRobot(object):
     def __init__(self, robot, canevas):
         """
-        construit la vue du robot = vue de la direction + vue du pave
-        """
+        construit la vue du robot = vue de la direction + vue du pave 
+        """        
         self.robot=robot
-        self.vuePave=Vue2DPave(robot.pave, canevas)
+        self.vuePave=Vue2DPave(robot.forme, canevas)
         self.vueDir=Vue2DVecteur(robot.direction, canevas)
-
+    
     def afficher(self, canevas):
-        """
+        """ 
         affiche le pave et la direction du robot
         """
         self.vuePave.afficher(canevas)
-        self.vueDir.afficher(canevas, self.robot.pave.centre)
-
+        self.vueDir.afficher(canevas, self.robot.forme.centre)
+        
 class Vue2DArene(object):
     """
-    contient tout les objets de l'arene et les affiche
+    contient tout les objets de l'arene et les affiche 
     """
     def __init__(self, arene):
         """
@@ -81,12 +82,12 @@ class Vue2DArene(object):
         self.arene=arene
 
     def afficher(self, canevas):
-        """
+        """ 
         affiche les objets de l'arene sur le canevas, s'ils sont reconnus
         """
         #objets: [Objet3D]
         objets=self.arene.objets3D
-
+        
         for o in objets:
             #o : Objet3D
             if isinstance(o, Robot):

@@ -1,88 +1,207 @@
-from geometrie3D.pointRep import Point
 from math import *
-from geometrie3D.pointRep.Fonctions import atan2
+class Point(object):
+    """
+    Classe definissant un point dans un espace 3D (x,y,z)
+    x : coordonnee en x
+    y : coordonnee en y
+    z : coordonnee en z
+    """
+    def __init__(self, x, y, z):
+        """
+        Initialise les coordonnees du point 
+        """
+        self.x=x
+        self.y=y
+        self.z=z
 
+    def setPosition(self, point):
+        """
+        Modifie les coordonnees du point
+        """
+        if issubclass(type(point), Point):
+            self.x=point.x
+            self.y=point.y
+            self.z=point.z
+    
+    def deplacer(self, vecteur):
+        """
+        Deplace le point d'un vecteur (dx, dy, dz)
+        """
+        if issubclass(type(vecteur),Point) or issubclass(type(vecteur), Vecteur):
+            self.setPosition(self+vecteur)
 
-class Vecteur(Point):
+    def tournerAutour(self, point, teta):
+        """
+        Tourne le point courant autour du point en argument de teta
+        """
+        # v: Vecteur
+        if issubclass(type(point), Point):
+            v=(self-point).toVect()
+            v.rotation2D(teta)
+            v=v+point #dans ce sens, l'addition renvoi un Vecteur
+            self.setPosition(v.toPoint())
+        
+    def toVect(self):
+        """
+        Converti le point en vecteur et 
+        """
+        return Vecteur(self.x, self.y, self.z)
+        
+    def __repr__(self):
+        """
+        Quand on entre un Point dans l'interpreteur
+        """
+        return "({}, {}, {})".format(self.x, self.y, self.z)
+
+    def __getattr__(self, nom):
+        """
+        Permet d'acceder a un attribut. si ce n'est pas possible:
+        """
+        print("L'attribut {} n'est pas accessible dans {} !".format(nom, type(self)))
+
+    def __add__(self, vp):
+        """
+        Addition. Dans ce sens, renvoi un Point que vp soit un vecteur ou un point
+        """
+        if issubclass(type(vp), Point) or issubclass(type(vp), Vecteur):
+            return Point(self.x+vp.x, self.y+vp.y, self.z+vp.z)
+
+    def __sub__(self, vp):
+        """ 
+        Soustraction. Dans ce sens, renvoi un vecteur que vp soit un vecteur ou un point
+        """
+        if issubclass(type(vp), Point) or issubclass(type(vp), Vecteur):
+            return Point(self.x-vp.x, self.y-vp.y, self.z-vp.z)
+
+    def __radd__(self, vp):
+        """
+        Addition inverse. Dans ce sens, peut renvoyer un Vecteur, si vp en est un
+        """
+        if issubclass(type(vp), Vecteur):
+            return Vecteur(self.x+vp.x, self.y+vp.y, self.z+vp.z)
+        elif issubclass(type(vp), Point):
+            return self+vp
+    
+    def __rsub__(self, vp):
+        """ 
+        Soustraction inverse. Dans ce sens, peut renvoyer un Point, si vp en est un 
+        """
+        if issubclass(type(point), Vecteur):
+            return Vecteur(vp.x-self.x, vp.y-self.y, vp.z-self.z)
+        if issubclass(type(point), Point):
+            return self-vp
+
+    def __truediv__(self, n):
+        """ 
+        division des coordonnees par un reel
+        """
+        if isinstance(n, int):
+            return Point(self.x/float(n), self.y/float(n), self.z/float(n))
+        elif isinstance(n, float):
+            return Point(self.x/n, self.y/n, self.z/n)
+
+class Vecteur(object):
     """
     Defini des methodes de calcul sur les vecteurs
     """
-
     def __init__(self, x, y, z):
         """
         Intialise les coordonnees
         """
-        Point.__init__(self, x, y, z)
-
-    def __mul__(self, vecteur):
-        """
-        produit scalaire ou multiplication par une constate reelle
-        """
-        if vecteur:
-            if issubclass(type(vecteur), Vecteur) and vecteur:
-                return self.x * vecteur.x + self.y * vecteur.y + self.z * vecteur.z
-            if isinstance(vecteur, float) or isinstance(vecteur, int):
-                return Vecteur(self.x * vecteur, self.y * vecteur, self.z * vecteur)
-
-    def __pow__(self, vecteur):
-        """
-        produit vectoriel
-        """
-        if issubclass(type(vecteur), Vecteur) and vecteur:
-            return Vecteur(self.y * vecteur.z - self.z * vecteur.y, self.z * vecteur.x - self.x * vecteur.z,
-                           self.x * vecteur.y - self.y * vecteur.x)
+        self.x=x
+        self.y=y
+        self.z=z
 
     def getAngle2D(self):
         """
-        Retourne l'angle du vecteur
+        Retourne l'angle du vecteur 
         par rapport a la verticale,
         dans le sens trigo, entre pi et -pi
         """
-        return self.diffAngle2D(Vecteur(1, 0, 0))
-
+        return self.diffAngle2D(Vecteur(1,0,0))
+    
     def diffAngle2D(self, vecteur):
         """
         retourne la difference d'angle entre 2 vecteurs dans le repere (x, y)
         """
-        if issubclass(type(vecteur), Vecteur) and vecteur:
+        if issubclass(type(vecteur), Vecteur):
             # v: Vecteur
-            v = self ** vecteur
-
+            v=self**vecteur
+            
             if self.y != 0 and vecteur.x != 0:
-                # utilise les proprietes du produit vectoriel pour determiner si l'angle est positif ou negatif
-                if v.z > 0:
-                    return -acos((self * vecteur) / (self.getNorme() * vecteur.getNorme()))
-                elif v.z < 0:
-                    return acos((self * vecteur) / (self.getNorme() * vecteur.getNorme()))
-            return atan2(vecteur.y, vecteur.x) - atan2(self.y, self.x)
-
+                #utilise les proprietes du produit vectoriel pour determiner si l'angle est positif ou negatif
+                if v.z>0:
+                    return -acos((self*vecteur)/(self.getNorme()*vecteur.getNorme()))
+                elif v.z<0:
+                    return acos((self*vecteur)/(self.getNorme()*vecteur.getNorme()))
+            return atan2(vecteur.y, vecteur.x)-atan2(self.y, self.x)
+                
     def getNorme(self):
         """
         Retourne la norme du vecteur
         """
-        return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2))
-
+        return sqrt(pow(self.x,2)+pow(self.y,2)+pow(self.z,2))
+    
     def rotation2D(self, teta):
         """
         tourne le vecteur d'un angle teta
         """
         # x: copie de self._x
-        x = self.x
+        x=self.x
+        
+        self.x=x*cos(teta)-self.y*sin(teta)
+        self.y=x*sin(teta)+self.y*cos(teta)
+    
+    def toPoint(self):
+        return Point(self.x, self.y, self.z)
+        
+    def __mul__(self, vecteur):
+        """
+        produit scalaire ou multiplication par une constate reelle
+        """
+        if issubclass(type(vecteur), Vecteur):
+            return self.x*vecteur.x+self.y*vecteur.y+self.z*vecteur.z
+        if isinstance(vecteur, float) or isinstance(vecteur, int):
+            return Vecteur(self.x*vecteur, self.y*vecteur, self.z*vecteur)
 
-        self.x = x * cos(teta) - self.y * sin(teta)
-        self.y = x * sin(teta) + self.y * cos(teta)
+    def __pow__(self, vecteur):
+        """
+        produit vectoriel 
+        """
+        if issubclass(type(vecteur), Vecteur):
+            return Vecteur(self.y*vecteur.z-self.z*vecteur.y, self.z*vecteur.x-self.x*vecteur.z, self.x*vecteur.y-self.y*vecteur.x)
 
+    def __add__(self, vp):
+        """
+        Addition. Dans ce sens, renvoi un vecteur que vp soit un vecteur ou un point
+        """
+        if issubclass(type(vp), Point) or issubclass(type(vp), Vecteur):
+            return Vecteur(self.x+vp.x, self.y+vp.y, self.z+vp.z)
 
-def tournerAutour(pointA, pointB, teta):
-    """
-    tourne le pointA d'un angle teta autour du pointB
+    def __sub__(self, point):
+        """ 
+        Soustraction. Dans ce sens, renvoi un vecteur que vp soit un vecteur ou un point
+        """
+        if issubclass(type(point), Point) or issubclass(type(point), Vecteur):
+            return Vecteur(self.x-point.x, self.y-point.y, self.z-point.z)
+        
+    def __truediv__(self, n):
+        """ 
+        division des coordonnees par un reel
+        """
+        if isinstance(n, int):
+            return Vecteur(self.x/float(n), self.y/float(n), self.z/float(n))
+        elif isinstance(n, float):
+            return Vecteur(self.x/n, self.y/n, self.z/n)
 
-    Inefficace...
-    """
+    def __repr__(self):
+        """
+        Quand on entre un vecteur dans l'interpreteur
+        """
+        return "v->({}, {}, {})".format(self.x, self.y, self.z)
 
-    if pointA != pointB:
-        op = pointA - pointB
-        v = Vecteur(op.x, op.y, op.z)
-        v.rotation2D(teta)
-        PointA = v + pointB
-    return pointA
+    def __getattr__(self, nom):
+        """
+        Permet d'acceder a un attribut. si ce n'est pas possible:
+        """
+        print("L'attribut {} n'est pas accessible dans {} !".format(nom, type(self)))
