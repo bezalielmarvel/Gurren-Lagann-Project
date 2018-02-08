@@ -1,10 +1,4 @@
-from tkinter import *
-from Objet3D import *
-from Arene import *
-from Point import *
-from Robot import *
-
-
+#ajouter les bons imports
 
 def affichage2D(arene):
     #on creer une fenetre 

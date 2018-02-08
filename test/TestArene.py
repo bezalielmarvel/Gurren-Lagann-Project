@@ -1,6 +1,7 @@
 from geometrie3D import Arene, Objet3D
 
-#Creation d'une arene et ajout de n objets
+
+
 a=Arene()
 n=3
 b=Objet3D()
@@ -14,7 +15,4 @@ a.vider()
 print(a)
 
 a.add(b)
-print(a)
-
-a.supprimer(b)
 print(a)
