@@ -8,22 +8,30 @@ from math import *
 """
 lance une simulation representant un robot de base
 """
+arene=Arene()
+robot=Robot(Pave(50, 50, 0), Objet3D(), Objet3D(), Vecteur(0,-1,0))
+robot.deplacer(Vecteur(100,100,0)) #Le robot doit avoir une position nulle au depart pour etre a (50,50)
+arene.add(robot)
+vueArene=Vue2DArene(arene)
 
 fenetre=Tk()
-robot=Robot(Pave(50, 50, 0), Objet3D(), Objet3D(), Vecteur(0,-1,0))
 Canevas = Canvas(fenetre, width = 480, height = 320, bg ='white')
-Valeur = StringVar()
-Valeur.set(0.0)
+
+#Variables gerant le parametrage par l'utilisateur
+Vitesse = StringVar()
+Vitesse.set(2.0)
+VitesseRot = StringVar()
+VitesseRot.set(pi/50.0)
+VMAX_ROT = StringVar()
+VMAX_ROT.set(pi/10.0)
 VMAX = StringVar()
 VMAX.set(10.0)
+
 
 def lancerSimulation():
     """
     Initialise les elements necessaires au lancement et appelle les fonctions de la simulation
     """
-    arene=creerArene()
-    global vueArene
-    global Canevas
 
     #creaction fenetre
     fenetre.title("Interface d'affichage d'un prototype de robot")
@@ -32,56 +40,66 @@ def lancerSimulation():
     Button(fenetre, text ='Quitter', command = fenetre.destroy).pack(side=LEFT,padx=5,pady=5)
     Button(fenetre, text ='Effacer', command = effacer).pack(side=LEFT,padx = 5,pady = 5)
 
-    #initialisation canvas/ vue arene
-    vueArene=Vue2DArene(arene)
-    vueArene.afficher(Canevas)
-    Canevas.bind('<Key>',clavier)
+    #attribution touches
+    Canevas.bind('<q>', virageGauche)
+    Canevas.bind('<d>', virageDroite)
+    Canevas.bind('<z>', marcheAvant)
+    Canevas.bind('<s>', marcheArriere)
     Canevas.focus_set()
+    #preparation de la modulation de la vitesse
+    modulVitesses()
     
-    # Création d'un widget Spinbox
-    boite = Spinbox(fenetre,from_=0,to=10,increment=0.5,textvariable=Valeur,width=5,command=modVitesse())
-    boite.pack(padx=30,pady=10)
     Canevas.pack(padx=10,pady=10)
     fenetre.mainloop()
+    
 
-def modVitesse():
+def modulVitesses():
     """
-    Verifie que la valeur entree est bien dans les normes
+    Cree les modulateurs de vitesse et de vitesse de rotation
     """
-    if Valeur.get()>VMAX.get():
-        Valeur.set(VMAX.get())
+    # Creation d'un widget Spinbox
+    boiteV1 = Spinbox(fenetre,from_=0,to=float(VMAX.get()),increment=0.5,textvariable=Vitesse,width=5,command=update)
+    boiteV1.pack(padx=10,pady=10)
+    Label(fenetre,text="Vitesse").pack(padx=10,pady=10)
+    
+    # Creation d'un widget Spinbox
+    boiteV2 = Spinbox(fenetre,from_=0,to=float(VMAX_ROT.get()),increment=0.01,textvariable=VitesseRot,width=5,command=update)
+    boiteV2.pack(padx=10,pady=10)
+    Label(fenetre,text="Vitesse rotation").pack(padx=10,pady=10)
 
-def clavier(event):
+def update():
     """
-    q, d pour tourner
-    z, s pour avancer/reculer
+    Met a jour les vitesses
     """
-    effacer()
-    pasRotation= pi/100
-    global robot
-    global vueArene
-    global Canevas
-    touche=event.keysym
-    if touche =='z':
-        robot.avancer(1)
-    if touche =='s':
-        robot.avancer(-1)
-    if touche=='q':
-        robot.tourner(-pasRotation)
-    if touche=='d':
-        robot.tourner(pasRotation)
+    robot.vitesse=float(Vitesse.get())
+    robot.vitesseRot=float(VitesseRot.get())
     vueArene.afficher(Canevas)
-
-def creerArene():
-    """
-    renvoi une arene avec quelques objets: ici juste un robot
-    """
-    arene = Arene()
-    global robot
-    robot.deplacer(Vecteur(100,100,0)) #Le robot doit avoir une position nulle au depart pour etre a (50,50)
-    arene.add(robot)
-    return arene
-        
+    
+def marcheAvant(event):
+    update()
+    effacer()
+    robot.avancer()
+    vueArene.afficher(Canevas)
+def marcheArriere(event):
+    update()
+    effacer()
+    if robot.vitesse>0:
+        robot.vitesse=-robot.vitesse
+    robot.avancer()
+    vueArene.afficher(Canevas)
+def virageGauche(event):
+    update()
+    effacer()
+    if robot.vitesseRot>0:
+        robot.vitesseRot=-robot.vitesseRot
+    robot.tourner()
+    vueArene.afficher(Canevas)
+def virageDroite(event):
+    update()
+    effacer()
+    robot.tourner()
+    vueArene.afficher(Canevas)
+    
 def effacer():
     """
     Efface la zone graphique
@@ -89,3 +107,4 @@ def effacer():
     Canevas.delete(ALL)
 
 lancerSimulation()
+

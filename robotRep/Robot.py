@@ -17,6 +17,8 @@ class Robot(Objet3D):
         """
         Objet3D.__init__(self)
         self.direction=direction
+        self.vitesse=0.0
+        self.vitesseRot=0.0
         self.forme=pave
         self.centre=pave.centre #initalise le centre au centre du pave
         self.rd=rd
@@ -26,21 +28,21 @@ class Robot(Objet3D):
         self.rd.centre=pave.sommets[1]/2
         self.rg.centre=pave.sommets[0]/2
 
-    def avancer(self, distance):
+    def avancer(self):
         """
         deplace le robot sans le sens de sa direction
         """
-        self.deplacer(self.direction*distance)
+        self.deplacer(self.direction*self.vitesse)
 
-    def tourner(self, angle):
+    def tourner(self):
         """
         tourne le robot par rapport a une des roues selon le signe de angle
         """
-        self.direction.rotation2D(angle)
-        if angle<0:
-            self.tournerAutour(self.rg.centre, angle)
+        self.direction.rotation2D(self.vitesseRot)
+        if self.vitesseRot<0:
+            self.tournerAutour(self.rg.centre, self.vitesseRot)
         else:
-            self.tournerAutour(self.rd.centre, angle)
+            self.tournerAutour(self.rd.centre, self.vitesseRot)
     
     def tournerAutour(self, point, angle):
         """

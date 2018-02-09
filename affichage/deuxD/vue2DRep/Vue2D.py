@@ -62,14 +62,14 @@ class Vue2DRobot(object):
         """        
         self.robot=robot
         self.vuePave=Vue2DPave(robot.forme, canevas)
-        self.vueDir=Vue2DVecteur(robot.direction, canevas)
+        self.vueVitesse=Vue2DVecteur(10*robot.direction*robot.vitesse, canevas)
     
     def afficher(self, canevas):
         """ 
         affiche le pave et la direction du robot
         """
         self.vuePave.afficher(canevas)
-        self.vueDir.afficher(canevas, self.robot.forme.centre)
+        self.vueVitesse.afficher(canevas, self.robot.forme.centre)
         
 class Vue2DArene(object):
     """

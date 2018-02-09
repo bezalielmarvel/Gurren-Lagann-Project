@@ -155,14 +155,22 @@ class Vecteur(object):
     def toPoint(self):
         return Point(self.x, self.y, self.z)
         
-    def __mul__(self, vecteur):
+    def __mul__(self, vi):
         """
         produit scalaire ou multiplication par une constate reelle
         """
-        if issubclass(type(vecteur), Vecteur):
-            return self.x*vecteur.x+self.y*vecteur.y+self.z*vecteur.z
-        if isinstance(vecteur, float) or isinstance(vecteur, int):
-            return Vecteur(self.x*vecteur, self.y*vecteur, self.z*vecteur)
+        if issubclass(type(vi), Vecteur):
+            return self.x*vi.x+self.y*vi.y+self.z*vi.z
+        if isinstance(vi, float):
+            return Vecteur(self.x*vi, self.y*vi, self.z*vi)
+        if isinstance(vi, int):
+            return Vecteur(float(self.x*vi), float(self.y*vi), float(self.z*vi))
+        
+    def __rmul__(self, vi):
+        """
+        produit scalaire ou multiplication par une constate reelle
+        """
+        return self*vi
 
     def __pow__(self, vecteur):
         """
