@@ -26,23 +26,23 @@ class Robot(Objet3D):
         
         #initialisation des centres des roues
         self.rd.centre=pave.sommets[1]/2
-        self.rg.centre=pave.sommets[0]/2
+        self.rg.centre=pave.sommets[0]/2        
 
-    def avancer(self):
+    def avancer(self, sens):
         """
-        deplace le robot sans le sens de sa direction
+        deplace le robot dans le sens voulu (1 pour l'avant, -1 pour l'arriere), sur sa direction
         """
-        self.deplacer(self.direction*self.vitesse)
+        self.deplacer(self.direction*self.vitesse*sens)
 
-    def tourner(self):
+    def tourner(self, sens):
         """
-        tourne le robot par rapport a une des roues selon le signe de angle
+        tourne le robot par rapport a une des roues selon le sens 
         """
-        self.direction.rotation2D(self.vitesseRot)
-        if self.vitesseRot<0:
-            self.tournerAutour(self.rg.centre, self.vitesseRot)
-        else:
+        self.direction.rotation2D(-sens*self.vitesseRot)
+        if sens==-1:
             self.tournerAutour(self.rd.centre, self.vitesseRot)
+        elif sens==1:
+            self.tournerAutour(self.rg.centre, -self.vitesseRot)
     
     def tournerAutour(self, point, angle):
         """
