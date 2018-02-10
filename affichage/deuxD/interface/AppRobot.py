@@ -5,7 +5,7 @@ from affichage.deuxD.vue2DRep import *
 
 class AppRobot(Tk):
     """
-    Definit une structure d'affichage d'un robot dans une arene
+    Definit une structure d'affichage d'un robot dans une arene vide
     """
     def __init__(self, robot, arene):
         """
@@ -20,6 +20,7 @@ class AppRobot(Tk):
         self.canvas=Canvas(self, width = 480, height = 320, bg ='white')    
         
         #Variables gerant le parametrage par l'utilisateur
+        #vitesses du robot suit ses valeurs
         self.vitesse = StringVar()
         self.vitesse.set(2.0)
         self.vitesseRot = StringVar()
@@ -37,11 +38,16 @@ class AppRobot(Tk):
         boiteV2.pack(side="left",padx=10,pady=10)
         Label(self,text="Vitesse rotation").pack(side="left",padx=10,pady=10)
 
+        #gestion des eventements pour commander le robot
         self.canvas.bind('<Key>', self.keyCommand)
         self.canvas.focus_set()
         
         self.canvas.pack()
+        
     def keyCommand(self, event):
+        """
+        dirige le robot selon la touche tapee
+        """
         self.update()
         self.canvas.delete(ALL)
         touche=event.keysym

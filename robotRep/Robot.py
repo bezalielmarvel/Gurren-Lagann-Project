@@ -10,7 +10,7 @@ class Robot(Objet3D):
         
         Constructeur du robot
         
-        direction: Vecteur norme montrant la direction du robot
+        direction: Vecteur norme montrant la direction initiale du robot
         forme: Pave attendu (correspond aux methodes de deplacement)
         rd: Objet3D, roue droite
         rg: Objet3D, roue gauche
@@ -30,7 +30,7 @@ class Robot(Objet3D):
 
     def avancer(self, sens):
         """
-        deplace le robot dans le sens voulu (1 pour l'avant, -1 pour l'arriere), sur sa direction
+        deplace le robot dans le sens voulu (1 pour l'avant, -1 pour l'arriere par ex), sur sa direction
         """
         if sens<0:
             self.deplacer(self.direction*-self.vitesse)
