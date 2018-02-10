@@ -38,3 +38,15 @@ class Arene(object):
         si ce n'est pas possible:
         """
         print("L'attribut {} n'est pas accessible dans Arene !".format(nom))
+
+    def triObjets(self):
+        def medHeight(obj):	
+            zmax=0
+            zmin=0
+            for s in obj.sommets:
+                if(s.z>zmax):
+                    zmax=s.z
+                if(s.z<zmin):
+                    zmin=s.z
+        return (float(zmin+zmax)/2.0)
+    self.objets3D=sorted(self.objets3D,key=medHeight)
