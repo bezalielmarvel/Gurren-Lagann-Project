@@ -1,5 +1,5 @@
 from geometrie3D import Objet3D
-from geometrie3D.pointRep import *
+from geometrie3D.pointRep import Point
 
 class Polygone3D(Objet3D):
     """

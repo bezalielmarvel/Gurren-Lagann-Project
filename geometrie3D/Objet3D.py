@@ -1,4 +1,4 @@
-from geometrie3D.pointRep import *
+from geometrie3D.pointRep import Point
 
 class Objet3D(object):
     """
