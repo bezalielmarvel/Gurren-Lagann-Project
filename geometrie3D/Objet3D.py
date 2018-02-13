@@ -1,4 +1,4 @@
-from geometrie3D.pointRep import *
+from geometrie3D.pointRep import Point
 
 class Objet3D(object):
     """
@@ -9,7 +9,7 @@ class Objet3D(object):
         """
         centre : Point definissant le centre de l'objet. initialise a (0, 0, 0)
         """
-        self.centre=Point(0,0,0)
+        self.centre=Point(0, 0, 0)
         
     def deplacer(self, vecteur):
         """

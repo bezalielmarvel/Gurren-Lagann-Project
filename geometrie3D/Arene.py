@@ -49,3 +49,5 @@ class Arene(object):
                 if(s.z<zmin):
                     zmin=s.z
         return (float(zmin+zmax)/2.0)
+
+#self.objets3D=sorted(self.objets3D,key=medHeight)
