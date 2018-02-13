@@ -9,7 +9,7 @@ a=Arene()
 a.add(r)
 
 app=AppRobotAutonome(r, Vue2DArene(a))
-app.init()
+app.init() 
 
 app.mainloop()
 

@@ -19,7 +19,7 @@ class DeplacementSimple(StrategieDeplacement):
             if abs(diffAngle)>self.robot.vitesseRot:
                 self.robot.tourner(diffAngle)
             else :
-                self.robot.avancer(1)
+                self.robot.avancer(1)  
         else:
             self.robot.destination=None
             

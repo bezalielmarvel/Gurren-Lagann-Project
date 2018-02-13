@@ -5,19 +5,21 @@ from time import sleep
 from tkinter import *
 
 class AppRobotAutonome(AppRobot):
+    PAS_TEMPS=0.015
     def __init__(self, robot, arene):
+        """
+        initialise les commandes supplementaires pour piloter le robot
+        """
         AppRobot.__init__(self, robot, arene)
         self.canvas.bind('<Button-1>', self.setDestRobot)
         self.canvas.bind('<Button-2>', self.stopRobot)
         self._thread=None
-        self._commandesClavier=False
 
     def keyCommand(self, event):
         """
         dirige le robot selon la touche tapee, et lui donne une destination avec la sourie
         """
         self.robot.destination=None
-        self._commandesClavier=True
         
         self.update()
 
@@ -38,7 +40,6 @@ class AppRobotAutonome(AppRobot):
         """
         donne une destination au robot, et lui fait executer la trajectoire
         """
-        self._commandesClavier=False
         x=event.x
         y=event.y
         self.robot.destination=Point(x, y, 0)
@@ -46,12 +47,21 @@ class AppRobotAutonome(AppRobot):
         
         
     def actionRobot(self):
+        """
+        Met a jour la simulation, et fais passez une unite de temps
+        
+        si le robot n'a pas atteint sa cible, la simulation avance encore d'une unite
+        """
         self.update()
-        sleep(0.1)
+        sleep(self.PAS_TEMPS)
         if not self.robot.destination is None:
             self.actionRobot()
         
-    def stopRobot(self):
+    def stopRobot(self, event):
+        """
+        le robot arrete de poursuivre la cible
+        appele si clic milieu
+        """
         self.robot.destination=None
         self._commandesClavier=True
         
@@ -72,6 +82,9 @@ class AppRobotAutonome(AppRobot):
         self.canvas.update()
 
     def update(self):
+        """
+        Met a jour les vitesses, la simulation du mouvement du robot et l'affichage
+        """
         self.updateValues()
-        self.updateCanvas()
         self.robot.update()
+        self.updateCanvas()
