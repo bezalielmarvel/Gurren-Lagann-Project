@@ -33,9 +33,9 @@ class testTrouverObjet(unittest.TestCase):
         element = trouverObjet3D(self.a, 3, 1, 0)
         self.assertIsInstance(element[0], Polygone3D, msg=None)
 
-    def test_Retour(self):
+    def test_acces_element(self):
         element = trouverObjet3D(self.a, 3, 1, 0)
-        self.assertEqual(element[0].x, 2)
+        self.assertEqual(element[0].x, None)
 
 
 if __name__ ==  '__main__ ' :
