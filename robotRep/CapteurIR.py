@@ -39,7 +39,18 @@ class CapteurIR (Capteur) :
             dans ce cas elle doit retourner True
             sinon elle retournera Faux
         """
-        
+       E=Vecteur(pointB.x-pointA.x,pointB.y-pointA.y,0)	
+       F=Vecteur(pointD.x-pointC.x,pointD.y-pointC.y,0)
+       #z=0 car on travail en 2D
+       denom=E.x*F.y-E.y*F.x
+       if(denom==0):
+           return False
+       t=-(float)(pointA.x*F.y-pointC.x*F.y-F.x*pointA.y+F.x*pointC.y)/denom
+       u=-(float)(-E.x*pointA.y+E.x*pointC.y+E.y*pointA.x-E.y*pointC.x)/denom
+       if(u<0 or u>1)or(t<0 or t>1):
+           return False
+       else:
+           return True     
 
     def mesure(vecteur, objet3D) :
         """ cette méthode retournera la distance si ya une colision entre le vecteur et l'objet3D
