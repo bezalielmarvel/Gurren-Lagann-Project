@@ -14,8 +14,10 @@ class Tete :
              #on doit vérifier si y'a pas un capteur de même type 
             for cap in self.Capteurs :
                 if cap.type == capteur.type :
+
                     print("il y a deja un capteur de meme type sur cette tête!")
                     return
+            capteur.orientation = self.orientation
             self.Capteurs.append(capteur)
 
     def supprimerCapteur(self , typeCapteur) : 

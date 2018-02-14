@@ -39,6 +39,7 @@ class CapteurIR (Capteur) :
             dans ce cas elle doit retourner True
             sinon elle retournera Faux
         """
+        
 
     def mesure(vecteur, objet3D) :
         """ cette méthode retournera la distance si ya une colision entre le vecteur et l'objet3D
