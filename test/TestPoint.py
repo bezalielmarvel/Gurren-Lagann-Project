@@ -1,18 +1,35 @@
-from geometrie3D.pointRep import *
+from geometrie3D.pointRep import Point
+from geometrie3D.pointRep import Vecteur
+import unittest
 
+class TestPoint(unittest.TestCase):
 
-A=Point(0,0,0)
-B=Point(1,2,3)
-C=Vecteur(1,2,3)
+    def setUp(self):
+        self.a = Point(0, 0, 0)
+        self.b = Point(1, 2, 3)
 
-A.setPosition(Point(0,0,1))
-A.deplacer(Point(0,1,0))
-print("deplacement de {}".format(A))
-print("coordonnee y: {}\n".format(A.y))
+    def test_initialisation(self):
+        self.assertIsInstance(self.a, Point, msg=None)
+        self.assertEqual(self.a.x, 0)
+        self.assertEqual(self.a.y, 0)
+        self.assertEqual(self.a.z, 0)
 
-print("{} + {} = {}".format(A,B,A+B))
-print("{} - {} = {}".format(A,B,A-B))
-print("{} / 2 = {}\n".format(A,A/2))
-print("conversions en vecteur:")
-print("{} + {} = {}".format(C,A,C+A))
-print("type({}.toVect()) = {}".format(A, type(A.toVect()) ))
+    def test_setPosition(self):
+        self.a.setPosition(Point(0, 0, 1))
+        self.assertEqual(self.a.x, 0)
+        self.assertEqual(self.a.y, 0)
+        self.assertEqual(self.a.z, 1)
+
+    def test_deplacer(self):
+        self.a.deplacer(self.b)
+        self.assertEqual(self.a.x, self.b.x)
+        self.assertEqual(self.a.y, self.b.y)
+        self.assertEqual(self.a.z, self.b.z)
+
+    def test_toVect(self):
+        v = self.a.toVect()
+        self.assertIsInstance(v, Vecteur, msg=None)
+        self.assertEqual(v.x, self.a.x)
+        self.assertEqual(v.y, self.a.y)
+        self.assertEqual(v.z, self.a.z)
+
