@@ -8,23 +8,24 @@ from geometrie3D.pointRep import Point
 
 class testTrouverObjet(unittest.TestCase):
     """On initialise les propriétés de la classe"""
+    def setUp(self):
 
-    a = Arene()
-    o = Polygone3D()
-    v = Polygone3D()
+        self.a = Arene()
+        self.o = Polygone3D()
+        self.v = Polygone3D()
 
-    o.addSommet(Point(0, 0, 0))
-    o.addSommet(Point(1, 0, 0))
-    o.addSommet(Point(0, 1, 0))
-    o.addSommet(Point(1, 1, 0))
+        self.o.addSommet(Point(0, 0, 0))
+        self.o.addSommet(Point(1, 0, 0))
+        self.o.addSommet(Point(0, 1, 0))
+        self.o.addSommet(Point(1, 1, 0))
 
-    v.addSommet(Point(2, 0, 0))
-    v.addSommet(Point(4, 0, 0))
-    v.addSommet(Point(0, 2, 0))
-    v.addSommet(Point(4, 4, 0))
+        self.v.addSommet(Point(2, 0, 0))
+        self.v.addSommet(Point(4, 0, 0))
+        self.v.addSommet(Point(0, 2, 0))
+        self.v.addSommet(Point(4, 4, 0))
 
-    a.add(o)
-    a.add(v)
+        self.a.add(self.o)
+        self.a.add(self.v)
 
 
 
