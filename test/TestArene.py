@@ -30,8 +30,8 @@ class testArene(unittest.TestCase):
     def test_vide_arene(self):
         for i in range(0, self.n):
             self.a.add(Objet3D())
-        print(len(self.a.objets3D))
         self.a.vider()
         self.assertEqual(len(self.a.objets3D), 0)
+
 
 
