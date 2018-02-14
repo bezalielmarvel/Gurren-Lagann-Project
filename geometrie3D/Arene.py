@@ -23,7 +23,13 @@ class Arene(object):
         """
         Reinitialise la liste d'objets 3D
         """
-        self.objets3D = list()
+        index = len(self.objets3D)-1
+
+        while index >= 0:
+            del self.objets3D[index]
+            index -= 1
+
+
 
     def __repr__(self):
         """
