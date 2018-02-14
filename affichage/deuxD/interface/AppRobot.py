@@ -5,7 +5,7 @@ from affichage.deuxD.vue2DRep import *
 
 class AppRobot(Tk):
     """
-    Definit une structure d'affichage d'un robot dans une arene
+    Definit une structure d'affichage d'un robot dans une arene vide
     """
     def __init__(self, robot, arene):
         """
@@ -20,14 +20,15 @@ class AppRobot(Tk):
         self.canvas=Canvas(self, width = 480, height = 320, bg ='white')    
         
         #Variables gerant le parametrage par l'utilisateur
+        #vitesses du robot suit ses valeurs
         self.vitesse = StringVar()
-        self.vitesse.set(2.0)
+        self.vitesse.set(7.0)
         self.vitesseRot = StringVar()
-        self.vitesseRot.set(pi/50.0)
+        self.vitesseRot.set(pi/30)
         VMAX_ROT = StringVar()
         VMAX_ROT.set(pi/10.0)
         VMAX = StringVar()
-        VMAX.set(10.0)        
+        VMAX.set(20.0)        
         
         # Creation widgets Spinbox
         boiteV1 = Spinbox(self,from_=0,to=float(VMAX.get()),increment=0.5,textvariable=self.vitesse,width=5,command=self.update)
@@ -37,13 +38,21 @@ class AppRobot(Tk):
         boiteV2.pack(side="left",padx=10,pady=10)
         Label(self,text="Vitesse rotation").pack(side="left",padx=10,pady=10)
 
+        #gestion des eventements pour commander le robot
         self.canvas.bind('<Key>', self.keyCommand)
-        self.canvas.focus_set()
         
         self.canvas.pack()
+        
+    def init(self):
+        self.canvas.focus_set()
+        self.arene.afficher(self.canvas)
+        self.canvas.update()
+        
     def keyCommand(self, event):
+        """
+        dirige le robot selon la touche tapee
+        """
         self.update()
-        self.canvas.delete(ALL)
         touche=event.keysym
         if touche=='z':
             self.robot.avancer(1)
@@ -53,7 +62,7 @@ class AppRobot(Tk):
             self.robot.tourner(1)
         elif touche=='d':
             self.robot.tourner(-1)
-        self.arene.afficher(self.canvas)
+        self.update()
             
     def update(self):
         """
