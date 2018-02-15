@@ -23,9 +23,14 @@ class VecteurPositionne(Vecteur):
         B=self.position+self.vecteur
         M=vecteurPos.position
         N=vecteurPos.position+vecteurPos.vecteur
-        if self.vecteur**vecteurPos.vecteur == Vecteur(0.0,0.0,0.0):
-            if A != M and B != N:
-                if (self.vecteur**(N-A).toVect())*(self.vecteur**(M-A).toVect())<=0:
-                    if (vecteurPos.vecteur**(B-M).toVect())*(vecteurPos.vecteur**(A-M).toVect())<=0:
-                        return True
+        if A != M and B != N:
+            if (self.vecteur**(N-A).toVect())*(self.vecteur**(M-A).toVect())<=0:
+                if (vecteurPos.vecteur**(B-M).toVect())*(vecteurPos.vecteur**(A-M).toVect())<=0:
+                    return True
         return False
+    
+    def __repr__(self):
+        """
+        Quand on entre un vecteur positionne dans l'interpreteur
+        """
+        return "{} a la position: {}".format(self.vecteur, self.position)

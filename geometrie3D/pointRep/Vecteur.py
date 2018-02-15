@@ -10,9 +10,9 @@ class Point(object):
         """
         Initialise les coordonnees du point 
         """
-        self.x=x
-        self.y=y
-        self.z=z
+        self.x=float(x)
+        self.y=float(y)
+        self.z=float(z)
 
     def setPosition(self, point):
         """
@@ -127,9 +127,9 @@ class Vecteur(object):
         """
         Intialise les coordonnees
         """
-        self.x=x
-        self.y=y
-        self.z=z
+        self.x=float(x)
+        self.y=float(y)
+        self.z=float(z)
 
     def getAngle2D(self):
         """
