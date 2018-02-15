@@ -99,6 +99,25 @@ class Point(object):
             return Point(self.x/float(n), self.y/float(n), self.z/float(n))
         elif isinstance(n, float):
             return Point(self.x/n, self.y/n, self.z/n)
+        
+    def __eq__(self, point):
+        """
+        Quand on teste l'egalite
+        """
+        if issubclass(type(point), Point):
+            if self.x==point.x and self.y==point.y and self.z==point.z:
+                return True
+        return False
+            
+    def __ne__(self, point):
+        """
+        Quand on teste l'inegalite
+        """
+        if self==point:
+            return False
+        return True
+    
+"""=========================================================================================="""
 
 class Vecteur(object):
     """
@@ -154,6 +173,9 @@ class Vecteur(object):
     
     def toPoint(self):
         return Point(self.x, self.y, self.z)
+            
+    def clone(self):
+        return Vecteur(self.x,self.y,self.z)
         
     def __mul__(self, vi):
         """
@@ -165,7 +187,7 @@ class Vecteur(object):
             return Vecteur(self.x*vi, self.y*vi, self.z*vi)
         if isinstance(vi, int):
             return Vecteur(float(self.x*vi), float(self.y*vi), float(self.z*vi))
-        
+
     def __rmul__(self, vi):
         """
         produit scalaire ou multiplication par une constate reelle
@@ -213,3 +235,22 @@ class Vecteur(object):
         Permet d'acceder a un attribut. si ce n'est pas possible:
         """
         print("L'attribut {} n'est pas accessible dans {} !".format(nom, type(self)))
+
+    def __eq__(self, vecteur):
+        """
+        Quand on teste l'egalite
+        """
+        if issubclass(type(vecteur), Vecteur):
+            if self.x==vecteur.x and self.y==vecteur.y and self.z==vecteur.z:
+                return True
+
+        return False
+            
+    def __ne__(self, vecteur):
+        """
+        Quand on teste l'inegalite
+        """
+        if self==vecteur:
+            return False
+        return True
+    
