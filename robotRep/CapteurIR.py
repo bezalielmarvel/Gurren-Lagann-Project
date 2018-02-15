@@ -7,7 +7,7 @@ class CapteurIR (Capteur) :
     """un capteur de distance, calcule la distance entre le point position et un Polygone,
         les émissions IR se font sur un axe donné par un vecteur orientation,
         si le signal envoyé par le capteur celon ce vecteur croise un polygone dans l'arene, une exxeption sera lancée
-    """
+        """
     def __init__(self , position, portee , orientation):
         Capteur.__int__(position , orientation)
         self.type = "IR"
@@ -35,22 +35,22 @@ class CapteurIR (Capteur) :
         return orientation.mul(vecttemp) > 0 
 
     def collisionVecteur(pointA ,pointB , pointC , pointD) : #coolision entre les vecteurs AB et CD
-       """cette méthode permet de dire si deux segment AB et CD sont en collisions, 
+        """cette méthode permet de dire si deux segment AB et CD sont en collisions, 
        dans ce cas elle doit retourner True
        sinon elle retournera Faux
        """
-       E=Vecteur(pointB.x-pointA.x,pointB.y-pointA.y,0)	
-       F=Vecteur(pointD.x-pointC.x,pointD.y-pointC.y,0)
-       #z=0 car on travail en 2D
-       denom=E.x*F.y-E.y*F.x
-       if(denom==0):
-           return False
-       t=-(float)(pointA.x*F.y-pointC.x*F.y-F.x*pointA.y+F.x*pointC.y)/denom
-       u=-(float)(-E.x*pointA.y+E.x*pointC.y+E.y*pointA.x-E.y*pointC.x)/denom
-       if(u<0 or u>1)or(t<0 or t>1):
-           return False
-       else:
-           return True     
+        E=Vecteur(pointB.x-pointA.x,pointB.y-pointA.y,0)	
+        F=Vecteur(pointD.x-pointC.x,pointD.y-pointC.y,0)
+        #z=0 car on travail en 2D
+        denom=E.x*F.y-E.y*F.x
+        if(denom==0):
+            return False
+        t=-(float)(pointA.x*F.y-pointC.x*F.y-F.x*pointA.y+F.x*pointC.y)/denom
+        u=-(float)(-E.x*pointA.y+E.x*pointC.y+E.y*pointA.x-E.y*pointC.x)/denom
+        if(u<0 or u>1)or(t<0 or t>1):
+            return False
+        else:
+            return True     
 
     def mesure(vecteur, objet3D) :
         """ cette méthode retournera la distance si ya une colision entre le vecteur et l'objet3D

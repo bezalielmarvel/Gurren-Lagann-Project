@@ -7,7 +7,7 @@ class Capteur :
     def __int__(self , position, orientation):
         self.type = "capteur"
         self.position = position
-	    self.orientation = orientation
+	self.orientation = orientation
 
     def __repr__(self):
         print(" capteur de type : {} , position : {} ".format(self.type , self.position))
