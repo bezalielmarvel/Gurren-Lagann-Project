@@ -17,4 +17,7 @@ class TestRobot(unittest.TestCase):
         self.assertIsInstance(self.r.direction, Vecteur, msg=None)
 
     def test_avancer(self):
-        self.r.avancer()
+        direction = self.r.direction
+        vitesse = 1.0
+        self.r.avancer(1)
+        self.assertEqual(self.r.direction, direction*vitesse)
