@@ -1,4 +1,5 @@
-#ajouter les bons imports
+from geometrie3D import *
+
 
 def affichage2D(arene):
     #on creer une fenetre 

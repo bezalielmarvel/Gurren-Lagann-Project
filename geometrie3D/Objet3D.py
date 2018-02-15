@@ -9,7 +9,7 @@ class Objet3D(object):
         """
         centre : Point definissant le centre de l'objet. initialise a (0, 0, 0)
         """
-        self.centre=Point(0, 0, 0)
+        self.centre = Point(0, 0, 0)
         
     def deplacer(self, vecteur):
         """

@@ -21,7 +21,7 @@ class Pave(Polygone3D):
         self.addSommet(Point(self.centre.x+longueur/2, self.centre.y+largeur/2, self.centre.z-hauteur/2))
         self.addSommet(Point(self.centre.x-longueur/2, self.centre.y+largeur/2, self.centre.z-hauteur/2))
 
-    def tournerAutour(self,point,teta):
+    def tournerAutour(self, point, teta):
         """
         tourne le pave autour de point d'un angle teta
         """

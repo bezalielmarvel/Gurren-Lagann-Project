@@ -34,11 +34,11 @@ class CapteurIR (Capteur) :
         vecttemp = Vecteur(point.x - self.position.x , point.y - self.position.y , 0)
         return orientation.mul(vecttemp) > 0 
 
-    def coolisionVecteur(pointA ,pointB , pointC , pointD) : #coolision entre les vecteurs AB et CD
-        """cette méthode permet de dire si deux segment AB et CD sont en coolisions, 
-            dans ce cas elle doit retourner True
-            sinon elle retournera Faux
-        """
+    def collisionVecteur(pointA ,pointB , pointC , pointD) : #coolision entre les vecteurs AB et CD
+       """cette méthode permet de dire si deux segment AB et CD sont en collisions, 
+       dans ce cas elle doit retourner True
+       sinon elle retournera Faux
+       """
        E=Vecteur(pointB.x-pointA.x,pointB.y-pointA.y,0)	
        F=Vecteur(pointD.x-pointC.x,pointD.y-pointC.y,0)
        #z=0 car on travail en 2D
