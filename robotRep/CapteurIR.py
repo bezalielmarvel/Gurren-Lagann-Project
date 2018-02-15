@@ -5,11 +5,11 @@ from geometrie3D.pointRep import Point
 
 class CapteurIR (Capteur) :
     """un capteur de distance, calcule la distance entre le point position et un Polygone,
-        les émissions IR se font sur un axe donné par un vecteur orientation,
-        si le signal envoyé par le capteur celon ce vecteur croise un polygone dans l'arene, une exxeption sera lancée
-        """
+    les émissions IR se font sur un axe donné par un vecteur orientation,
+    si le signal envoyé par le capteur celon ce vecteur croise un polygone dans l'arene, une exxeption sera lancée
+    """
     def __init__(self , position, portee , orientation):
-        Capteur.__int__(position , orientation)
+        Capteur.__int__(self, position , orientation)
         self.type = "IR"
         self.portee = portee
         self.pointMax = Point(cos(orientation.getAngle2D()) * self.portee + 
@@ -32,7 +32,7 @@ class CapteurIR (Capteur) :
         retroune False sinon
         """
         vecttemp = Vecteur(point.x - self.position.x , point.y - self.position.y , 0)
-        return orientation.mul(vecttemp) > 0 
+        return self.orientation*vecttemp > 0 
 
     def collisionVecteur(pointA ,pointB , pointC , pointD) : #coolision entre les vecteurs AB et CD
         """cette méthode permet de dire si deux segment AB et CD sont en collisions, 
@@ -50,7 +50,7 @@ class CapteurIR (Capteur) :
         if(u<0 or u>1)or(t<0 or t>1):
             return False
         else:
-            return True     
+            return True
 
     def mesure(vecteur, objet3D) :
         """ cette méthode retournera la distance si ya une colision entre le vecteur et l'objet3D
