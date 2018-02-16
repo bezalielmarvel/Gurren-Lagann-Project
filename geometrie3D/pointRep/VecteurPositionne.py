@@ -34,3 +34,14 @@ class VecteurPositionne(Vecteur):
         Quand on entre un vecteur positionne dans l'interpreteur
         """
         return "{} a la position: {}".format(self.vecteur, self.position)
+    
+
+def collision(A, B, C, D):
+    """
+    A, B, C, D: Point
+    
+    Renvoie True si les vecteurs AB et CD se croisent
+    """
+    AB=VecteurPositionne((B-A).toVect(), A)
+    CD=VecteurPositionne((D-C).toVect(), C)
+    return AB.collision2D(CD)
