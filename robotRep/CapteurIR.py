@@ -34,23 +34,41 @@ class CapteurIR (Capteur) :
         vecttemp = Vecteur(point.x - self.position.x , point.y - self.position.y , 0)
         return self.orientation*vecttemp > 0 
 
-    def collisionVecteur(pointA ,pointB , pointC , pointD) : #coolision entre les vecteurs AB et CD
-        """cette méthode permet de dire si deux segment AB et CD sont en collisions, 
-       dans ce cas elle doit retourner True
-       sinon elle retournera Faux
-       """
-        E=Vecteur(pointB.x-pointA.x,pointB.y-pointA.y,0)	
-        F=Vecteur(pointD.x-pointC.x,pointD.y-pointC.y,0)
-        #z=0 car on travail en 2D
-        denom=E.x*F.y-E.y*F.x
-        if(denom==0):
-            return False
-        t=-(float)(pointA.x*F.y-pointC.x*F.y-F.x*pointA.y+F.x*pointC.y)/denom
-        u=-(float)(-E.x*pointA.y+E.x*pointC.y+E.y*pointA.x-E.y*pointC.x)/denom
-        if(u<0 or u>1)or(t<0 or t>1):
-            return False
-        else:
-            return True
+    def collisionVecteur(A, B, C, D): 
+        """cette méthode prend en parametre quatre points A,B,C et D 
+        retourne un tuple (xi,yi,b,r,s) ou xi et yi sont les coordonnées du point d'intersection, 
+        b est un boolean qui vaut true si il y'a une intersection et faux sinon, 
+        r et s: (xi,yi)=A+r*(B-A) et (xi,yi)=C+s*(D-C)
+        """
+        xa=A.x
+        xb=B.x
+        ya=A.y
+        yb=B.y
+        
+        dxab=xb-xa
+        dyab=yb-ya
+        
+        xc=C.x
+        xd=D.x
+        yc=C.y
+        yd=D.y
+        
+        dxcd=xd-xc
+        dycd=yd-yc
+        
+        #on cherche les deux uniques valeurs s et r tq C+s*(D-C)=A+r*(B-A)
+        v=(-dxab*dycd+dyab*dxcd)
+        #si v est trop petit on concidére que les vecteurs sont parallels
+        if abs(v) <0.0001 :
+            return (0,0,False,0,0)
+        
+        r=(dycd*(xa-xc)+dxcd*(yc-ya))/float(v)
+        s=(dyab*(xa-xc)+dxab*(yc-ya))/float(v)
+        
+        xi=(xa + r*dxab + xc + s*dxcd)/2.0
+        yi=(ya + r*dyab + yc + s*dycd)/2.0
+        
+        return(xi,yi,True,r,s)
 
     def mesure(vecteur, objet3D) :
         """ cette méthode retournera la distance si ya une colision entre le vecteur et l'objet3D
