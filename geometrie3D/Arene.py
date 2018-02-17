@@ -1,5 +1,6 @@
-from geometrie3D.Objet3D import *
-
+from .Objet3D import *
+from .Pave import *
+from .Polygone3D import *
 
 class Arene(object):
     """
@@ -23,13 +24,48 @@ class Arene(object):
         """
         Reinitialise la liste d'objets 3D
         """
-        index = len(self.objets3D)-1
-
-        while index >= 0:
-            del self.objets3D[index]
-            index -= 1
+        self.objets3D = list()
 
 
+    def sauvegarder(self , nomfichier):
+        f = open(nomfichier , "w")
+        f.write("1024 1024\n")
+        for objet in self.objets3D :
+            if issubclass(type(objet) , Pave) :
+                f.write("PAVE {} {} {}".format(objet.longueur , objet.largeur,objet.hauteur))
+            else :
+                f.write("POLYGONE3D")
+                for som in objet.sommets :
+                    f.write(" ({},{},{})".format(som.x , som.y , som.z))
+            f.write("\n")
+        f.close()
+
+    def lecture_fichier(self, fichier):
+        """
+        Cette cree une arene avec
+        obstacles declaré dans un fichier txt.
+        """
+
+        mon_fichier = open(fichier, "r")
+        for line in mon_fichier.read.splitlines()[1:]:
+            words = line.split();
+            if (words[0] == "POLYGONE3D"):
+                polygone = Polygone3D()
+                for sommet_str in words[2:]:
+                    sommet_str = sommet.replace("(", "")
+                    sommet_str = sommet.replace(")", "")
+                    sommet_tab = sommet_str.split(",")
+                    polygone.add(Point(sommet_tab[0], sommet_tab[1], sommet_tab[2]))
+                self.add(polygone)
+            elif (word[0] == "PAVE"):
+                pave = Pave()
+                for sommet in words[2:]:
+                    sommet_str = sommet.replace("(", "")
+                    sommet_str = sommet.replace(")", "")
+                    sommet_tab = sommet_str.split(",")
+                    pave.add(Point(sommet_tab[0], sommet_tab[1], sommet_tab[2]))
+                self.add(pave)
+        mon_fichier.close()
 
     def __repr__(self):
         """
@@ -45,15 +81,5 @@ class Arene(object):
         """
         print("L'attribut {} n'est pas accessible dans Arene !".format(nom))
 
-    def triObjets(self):
-        def medHeight(obj):	
-            zmax=0
-            zmin=0
-            for s in obj.sommets:
-                if(s.z>zmax):
-                    zmax=s.z
-                if(s.z<zmin):
-                    zmin=s.z
-        return (float(zmin+zmax)/2.0)
 
-#self.objets3D=sorted(self.objets3D,key=medHeight)
+
