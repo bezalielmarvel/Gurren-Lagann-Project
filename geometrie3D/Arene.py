@@ -1,6 +1,5 @@
-from .Objet3D import *
-from .Pave import *
-from .Polygone3D import *
+from geometrie3D.Objet3D import *
+from geometrie3D import Polygone3D
 
 class Arene(object):
     """
@@ -83,3 +82,31 @@ class Arene(object):
 
 
 
+
+
+    def vueDessus(self, xmax, ymax):
+        matrice2D = [[-1] * ymax for _ in range(xmax)]
+        resolutionx = 0
+        resolutiony = 0
+
+        while(xmax/10):
+            resolutionx += 1
+        while(ymax/10):
+            resolutiony += 1
+
+        for a in self.objets3D:
+            if isinstance(a, Polygone3D):
+                listeSommets = a.sommets
+                listeCoord = listeSommets[0]
+                max_x = listeCoord.x
+                max_y = listeCoord.y
+                for elt in listeSommets:
+                    """on recupere chaques coordonnées x, y, z de elt qui parcourt la liste de sommet"""
+                    listeCoord = elt
+                    if (listeCoord.x > max_x):
+                        max_x = listeCoord.x
+                    if (listeCoord.y > max_y):
+                        max_y = listeCoord.y
+            for i in range (listeCoord.x*(resolutionx*10), max_x * (resolutionx*10)):
+                for j in range(listeCoord.y * (resolutiony*10), max_y * (resolutionx*10)):
+                    matrice2D[i][j] = 1
