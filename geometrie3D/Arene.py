@@ -1,5 +1,6 @@
 from geometrie3D.Objet3D import *
 from geometrie3D import Polygone3D
+from geometrie3D import pointDansPolygone
 
 class Arene(object):
     """
@@ -88,7 +89,9 @@ class Arene(object):
         matrice2D = [[-1] * ymax for _ in range(xmax)]
         resolutionx = 0
         resolutiony = 0
+        boolean = False
 
+        """On regarde combien de chiffres possede xmax et ymax pour determiner la resolution de la matrice"""
         while(xmax/10):
             resolutionx += 1
         while(ymax/10):
@@ -97,16 +100,8 @@ class Arene(object):
         for a in self.objets3D:
             if isinstance(a, Polygone3D):
                 listeSommets = a.sommets
-                listeCoord = listeSommets[0]
-                max_x = listeCoord.x
-                max_y = listeCoord.y
-                for elt in listeSommets:
-                    """on recupere chaques coordonnées x, y, z de elt qui parcourt la liste de sommet"""
-                    listeCoord = elt
-                    if (listeCoord.x > max_x):
-                        max_x = listeCoord.x
-                    if (listeCoord.y > max_y):
-                        max_y = listeCoord.y
-            for i in range (listeCoord.x*(resolutionx*10), max_x * (resolutionx*10)):
-                for j in range(listeCoord.y * (resolutiony*10), max_y * (resolutionx*10)):
-                    matrice2D[i][j] = 1
+            for i in range(0, xmax * (resolutionx*10)):
+                for j in range(0, ymax * (resolutionx*10)):
+                    boolean = pointDansPolygone(i, j, listeSommets)
+                    if(boolean):
+                        matrice2D[i][j] = 1
