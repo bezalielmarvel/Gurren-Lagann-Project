@@ -27,6 +27,34 @@ class Arene(object):
         self.objets3D = list()
 
 
+    def vueDessus(self, xmax, ymax):
+        matrice2D = [[-1] * ymax for _ in range(xmax)]
+        resolutionx = 0
+        resolutiony = 0
+
+        while(xmax/10):
+            resolutionx += 1
+        while(ymax/10):
+            resolutiony += 1
+
+        for a in self.objets3D:
+            if isinstance(a, Polygone3D):
+                listeSommets = a.sommets
+                listeCoord = listeSommets[0]
+                max_x = listeCoord.x
+                max_y = listeCoord.y
+                for elt in listeSommets:
+                    """on recupere chaques coordonnées x, y, z de elt qui parcourt la liste de sommet"""
+                    listeCoord = elt
+                    if (listeCoord.x > max_x):
+                        max_x = listeCoord.x
+                    if (listeCoord.y > max_y):
+                        max_y = listeCoord.y
+            for i in range (listeCoord.x*(resolutionx*10), max_x * (resolutionx*10)):
+                for j in range(listeCoord.y * (resolutiony*10), max_y * (resolutionx*10)):
+                    matrice2D[i][j] = 1
+
+
     def sauvegarder(self , nomfichier):
         f = open(nomfichier , "w")
         f.write("1024 1024\n")
