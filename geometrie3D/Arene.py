@@ -117,13 +117,17 @@ class Arene(object):
         matrice2D = [[-1] * ymax for _ in range(xmax)]
         resolutionx = 0
         resolutiony = 0
+        maximumx = xmax
+        maximumy = ymax
         boolean = False
 
         """On regarde combien de chiffres possede xmax et ymax pour determiner la resolution de la matrice"""
-        while(xmax/10):
+        while(maximumx):
             resolutionx += 1
-        while(ymax/10):
+            maximumx = maximumx/10
+        while(maximumx):
             resolutiony += 1
+            maximumy = maximumy/10
 
         for a in self.objets3D:
             if isinstance(a, Polygone3D):
