@@ -70,11 +70,10 @@ class Arene(object):
 					f.write(" ({},{},{})".format(som.x , som.y , som.z))
 			f.write("\n")
 		f.close()
-		
 
 	def lecture_fichier(self, fichier):
 		"""
-		Cette cree une arene avec
+		Cette fonction cree une arene avec des
 		obstacles declaré dans un fichier txt.
 		"""
 
@@ -83,21 +82,18 @@ class Arene(object):
 			words = line.split();
 			if (words[0] == "POLYGONE3D"):
 				polygone = Polygone3D()
-				for sommet_str in words[1:]:
-					sommet_str = sommet.replace("(", "")
-					sommet_str = sommet_str.replace(")", "")
-					sommet_tab = sommet_str.split(",")
-					polygone.add(Point(int(sommet_tab[0]), int(sommet_tab[1]), int(sommet_tab[2])))
-				self.add(polygone)
-			elif (word[0] == "PAVE"):
-				pave = Pave()
 				for sommet in words[1:]:
 					sommet_str = sommet.replace("(", "")
 					sommet_str = sommet_str.replace(")", "")
 					sommet_tab = sommet_str.split(",")
-					pave.add(Point(int(sommet_tab[0]), int(sommet_tab[1]), int(sommet_tab[2])))
+					polygone.addSommet(Point(int(sommet_tab[0]), int(sommet_tab[1]), int(sommet_tab[2])))
+					
+				self.add(polygone)
+			if (words[0] == "PAVE"):
+				pave = Pave(int(words[1]),int(words[2]),int(words[3]))
 				self.add(pave)
 		mon_fichier.close()
+		
 	def __repr__(self):
 		"""
 		Quand on entre une arene dans l'interpreteur
