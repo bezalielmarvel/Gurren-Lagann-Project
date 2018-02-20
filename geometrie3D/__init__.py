@@ -1,3 +1,6 @@
+
+
+from .pointRep import *
 from .Arene import *
 from .Objet3D import *
 from .Pave import *
