@@ -1,4 +1,3 @@
-from geometrie3D.Arene import * #aller dans le fichier
 from .Arene import *
 from .Objet3D import *
 from .Pave import *

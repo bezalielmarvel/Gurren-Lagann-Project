@@ -46,6 +46,9 @@ class Point(object):
         Converti le point en vecteur et 
         """
         return Vecteur(self.x, self.y, self.z)
+    
+    def toTuple(self):
+        return (self.x, self.y, self.z)
         
     def __repr__(self):
         """
@@ -173,6 +176,9 @@ class Vecteur(object):
     
     def toPoint(self):
         return Point(self.x, self.y, self.z)
+    
+    def toTuple(self):
+        return (self.x , self.y, self.z)
             
     def clone(self):
         return Vecteur(self.x,self.y,self.z)
