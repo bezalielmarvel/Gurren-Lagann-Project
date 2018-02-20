@@ -26,7 +26,7 @@ class Vue3DPave(object):
         """
         dessine le pave dans la fenetre courante
         """
-        pyglet.graphics.draw_indexed(8, pyglet.gl.GL_LINES, 
+        pyglet.graphics.draw_indexed(8, pyglet.gl.GL_LINES,
                                      self.index, ('v3f', self.sommets_data), ('c3B', (255,255,255)*8) ) # les lignes sont blanches
     def update(self):
         """

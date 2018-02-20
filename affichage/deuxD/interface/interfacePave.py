@@ -1,6 +1,6 @@
 from tkinter import *
 from geometrie3D import Arene, Pave, Objet3D
-from affichage.deuxD.vue2DRep.Vue2D import *
+from affichage.deuxD.vue2DRep import *
 from geometrie3D.pointRep import Vecteur
 from robotRep import Robot
 from math import *

@@ -1,7 +1,9 @@
 from tkinter import *
-from robotRep import *
+from robotRep import Robot
 from geometrie3D import *
 from affichage.deuxD.vue2DRep import *
+
+
 
 class AppRobot(Tk):
     """
@@ -12,7 +14,7 @@ class AppRobot(Tk):
         Constructeur de l'application
         
         robot: Robot
-        arene: vue de l'arene (avec methode afficher())
+        arene: Vue2DArene (avec methode afficher())
         """
         Tk.__init__(self)
         self.robot=robot    
@@ -45,13 +47,15 @@ class AppRobot(Tk):
         
     def init(self):
         self.canvas.focus_set()
+        self.robot.vitesse=float(self.vitesse.get())
+        self.robot.vitesseRot=float(self.vitesseRot.get())
         self.arene.afficher(self.canvas)
-        self.canvas.update()
         
     def keyCommand(self, event):
         """
         dirige le robot selon la touche tapee
         """
+        self.canvas.delete(ALL)
         self.update()
         touche=event.keysym
         if touche=='z':
@@ -70,5 +74,6 @@ class AppRobot(Tk):
         """
         self.robot.vitesse=float(self.vitesse.get())
         self.robot.vitesseRot=float(self.vitesseRot.get())
+        self.canvas.delete(ALL)
         self.arene.afficher(self.canvas)
         
