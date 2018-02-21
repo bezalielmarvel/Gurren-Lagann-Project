@@ -168,12 +168,32 @@ class Vecteur(object):
         """
         tourne le vecteur d'un angle teta
         """
-        # x: copie de self._x
+        # x: copie de self.y
         x=self.x
         
         self.x=x*cos(teta)-self.y*sin(teta)
         self.y=x*sin(teta)+self.y*cos(teta)
-    
+        
+    def rotationX(self, teta):
+        """
+        tourne le vecteur d'un angle teta
+        """
+        # y: copie de self.y
+        y=self.y
+        
+        self.y=y*cos(teta)-self.z*sin(teta)
+        self.z=y*sin(teta)+self.z*cos(teta)
+        
+    def rotationY(self, teta):
+        """
+        tourne le vecteur d'un angle teta
+        """
+        # y: copie de self.y
+        z=self.z
+        
+        self.z=z*cos(teta)-self.x*sin(teta)
+        self.x=z*sin(teta)+self.x*cos(teta)
+        
     def toPoint(self):
         return Point(self.x, self.y, self.z)
     
