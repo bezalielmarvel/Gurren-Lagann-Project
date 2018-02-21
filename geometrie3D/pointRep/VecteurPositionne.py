@@ -1,6 +1,6 @@
 from geometrie3D.pointRep import Point, Vecteur
 
-class VecteurPositionne(Vecteur):
+class VecteurPositionne(object):
     """
     Vecteur avec une position dans l'espace
     """
